@@ -11,8 +11,11 @@ Gem::Specification.new do |s|
     "https://rubygems.org/gems/cloud_waba"
   s.license       = "MIT"
   
+  # Runtime dependencies
   s.add_dependency 'dotenv' # env variable
   s.add_dependency 'http', '>= 4.0.0'
+
+  # Development dependencies
   s.add_development_dependency "rspec" # testing
   s.add_development_dependency 'webmock'
 end
