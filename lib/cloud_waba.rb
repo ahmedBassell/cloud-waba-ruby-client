@@ -11,6 +11,7 @@ require_relative "models/enums/messaging_product"
 require_relative "models/config"
 require_relative "models/contact"
 require_relative "models/messages/response"
+require_relative "models/templates/component"
 # Services
 require_relative "api/messages/service"
 

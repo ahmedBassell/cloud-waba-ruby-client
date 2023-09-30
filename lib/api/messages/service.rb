@@ -16,9 +16,9 @@ module API
 
 
       sig do
-        params(body: ::String, recipient: ::String, reply_message_id: ::T.nilable(::String)).returns(::Models::Messages::Response)
+        params(recipient: ::String, body: ::String, reply_message_id: ::T.nilable(::String)).returns(::Models::Messages::Response)
       end
-      def send_text(body:, recipient:, reply_message_id: nil)
+      def send_text(recipient:, body:, reply_message_id: nil)
         text_type = "text"
         enable_preview = false
 
@@ -34,6 +34,35 @@ module API
         }
 
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
+
+        response = http_client.post(body: payload, headers: {})
+        ::Models::Messages::Response.parse(response: response)
+      end
+
+      sig do
+        params(
+          recipient: ::String,
+          template_name: ::String,
+          template_lang: ::String,
+          components: ::T::Array[::Models::Templates::Component]
+        ).returns(::Models::Messages::Response)
+      end
+      def send_template(recipient:, template_name:, template_lang:, components:)
+        template_type = "template"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": template_type,
+          "template": {
+            "name": template_name,
+            "language": {
+              "code": template_lang
+            },
+            "components": []
+          }
+        }
 
         response = http_client.post(body: payload, headers: {})
         ::Models::Messages::Response.parse(response: response)
