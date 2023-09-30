@@ -1,32 +1,70 @@
 PATH
   remote: .
   specs:
-    cloudwaba (0.0.0)
+    cloud-waba-ruby-client (0.0.0)
+      dotenv (~> 2.8.0)
+      http (~> 4.0.0)
+      sorbet-runtime (~> 0.5.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
+    byebug (9.1.0)
+    crack (0.4.5)
+      rexml
     diff-lcs (1.5.0)
-    rspec (3.11.0)
-      rspec-core (~> 3.11.0)
-      rspec-expectations (~> 3.11.0)
-      rspec-mocks (~> 3.11.0)
-    rspec-core (3.11.0)
-      rspec-support (~> 3.11.0)
-    rspec-expectations (3.11.1)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.8.1)
+    hashdiff (1.0.1)
+    http (4.0.5)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.0)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.5)
+      domain_name (~> 0.5)
+    http-form_data (2.3.0)
+    http_parser.rb (0.6.0)
+    public_suffix (4.0.7)
+    rexml (3.2.6)
+    rspec (3.4.0)
+      rspec-core (~> 3.4.0)
+      rspec-expectations (~> 3.4.0)
+      rspec-mocks (~> 3.4.0)
+    rspec-core (3.4.4)
+      rspec-support (~> 3.4.0)
+    rspec-expectations (3.4.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
-    rspec-mocks (3.11.1)
+      rspec-support (~> 3.4.0)
+    rspec-mocks (3.4.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.11.0)
-    rspec-support (3.11.1)
+      rspec-support (~> 3.4.0)
+    rspec-support (3.4.1)
+    sorbet (0.5.10461)
+      sorbet-static (= 0.5.10461)
+    sorbet-runtime (0.5.10461)
+    sorbet-static (0.5.10461-universal-darwin-14)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.8.2)
+    webmock (3.17.1)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  cloudwaba!
-  rspec
+  byebug (~> 9.0, >= 9.0.5)
+  cloud-waba-ruby-client!
+  rspec (~> 3.4.0)
+  sorbet
+  sorbet-runtime
+  webmock (~> 3.17.0)
 
 BUNDLED WITH
    2.1.4

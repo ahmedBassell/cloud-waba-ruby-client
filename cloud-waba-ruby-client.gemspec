@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Ahmed Bassell"]
   s.email       = "ahmedbassell@gmail.com"
   # s.platform    = Gem::Platform::RUBY
-  s.files       = ["lib/cloud_waba.rb"]
+  s.files       = `git ls-files`.split("\n")
   s.homepage    =
     "https://rubygems.org/gems/cloud_waba"
   s.license       = "MIT"
@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", '~>3.4.0' # testing
   s.add_development_dependency 'webmock', '~>3.17.0'
   s.add_development_dependency 'byebug', '~> 9.0', '>= 9.0.5'
-  s.add_development_dependency 'sorbet', '~> 0.5.11048'
+  s.add_development_dependency 'sorbet', '~> 0.5.1'
+  s.add_runtime_dependency 'sorbet-runtime', '~>0.5.1'
 end

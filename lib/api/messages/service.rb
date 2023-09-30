@@ -1,3 +1,6 @@
+# typed: true
+# frozen_string_literal: true
+
 module API
   module Messages
     class Service
@@ -30,17 +33,17 @@ module API
           }
         }
 
-        response = http_client.post(body: payload)
+        response = http_client.post(body: payload, headers: {})
       end
 
       private
 
       def http_client
-        HttpClient.new(base_url: messages_endpoint, auth_token: @config.access_token)
+        ::HttpClient.new(base_url: messages_endpoint, auth_token: @config.access_token)
       end
 
       def messages_endpoint
-        "#{@config.base_url}/#{config.phone_number_id}/messages"
+        "#{@config.base_url}/#{@config.phone_number_id}/messages"
       end
     end
   end

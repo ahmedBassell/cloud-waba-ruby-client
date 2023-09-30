@@ -1,8 +1,11 @@
+# typed: true
+# frozen_string_literal: true
+
 class Utils
   extend ::T::Sig
   extend ::T::Helpers
 
-  sig { returns(Models::Config) }
+  sig { returns(::Models::Config) }
   def self.import_config
     Dotenv.load
     validate_config!
@@ -15,7 +18,7 @@ class Utils
     access_token = ENV.fetch("CLOUD_API_ACCESS_TOKEN", "")
     api_version = ENV.fetch("CLOUD_API_VERSION", "v16.0")
 
-    config = Models::Config.new(
+    config = ::Models::Config.new(
       base_url: base_url,
       app_id: app_id,
       app_secret: app_secret,
