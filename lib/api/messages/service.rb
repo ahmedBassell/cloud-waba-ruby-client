@@ -16,7 +16,7 @@ module API
 
 
       sig do
-        params(body: ::String, recipient: ::String, reply_message_id: ::T.nilable(::String)).returns(::T::Hash[T.untyped, T.untyped])
+        params(body: ::String, recipient: ::String, reply_message_id: ::T.nilable(::String)).returns(::Models::Messages::Response)
       end
       def send_text(body:, recipient:, reply_message_id: nil)
         text_type = "text"
@@ -36,7 +36,7 @@ module API
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
         response = http_client.post(body: payload, headers: {})
-        JSON.parse(response.body.to_s)
+        ::Models::Messages::Response.parse(response: response)
       end
 
       private

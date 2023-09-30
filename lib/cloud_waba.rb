@@ -5,9 +5,13 @@ require "sorbet-runtime"
 
 require_relative "utils"
 require_relative "http_client"
-# models
+# Enums
+require_relative "models/enums/messaging_product"
+# Models
 require_relative "models/config"
-# services
+require_relative "models/contact"
+require_relative "models/messages/response"
+# Services
 require_relative "api/messages/service"
 
 class CloudWaba
