@@ -9,6 +9,23 @@ Add following line to your Gemfile:
 ```ruby
 gem 'cloud-waba-ruby-client', '~> 1.0'
 ``` -->
+## Setup
+1. Make sure you have
+  - Meta business app
+  - WhatsApp Business account
+  - A phone number added to your WhatsApp business account
+  - Meta developer app
+2. Add following environment variables to your `.env` file:
+  ```shell
+  WA_BASE_URL=https://graph.facebook.com
+  CLOUD_API_VERSION=v16.0
+  M4D_APP_ID=
+  M4D_APP_SECRET=
+  WA_PHONE_NUMBER_ID=
+  WA_BUSINESS_ACCOUNT_ID=
+  CLOUD_API_ACCESS_TOKEN=
+  ```
+Fill credentials for your meta developer app, business account and phone number ids.
 
 ## Usage
 ### Sending template message
