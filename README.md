@@ -43,6 +43,20 @@ require "cloud_waba/client"
 client = CloudWaba::Client.new
 client.messages.send_text(body: "Hello World!", recipient: "+201XXXXXXXXX")
 ```
+<!-- ### Sending template with header, body, footer and buttons
+
+### Sending template with header, body, footer and buttons (variables)
+
+### Sending audio
+### Sending video
+### Sending image
+### Sending location
+### Sending contact -->
+
+
+
+
+## Templates
 
 ### Creating a template
 ```ruby
@@ -51,3 +65,37 @@ require "cloud_waba/client"
 client = CloudWaba::Client.new
 client.templates.create(name: "welcome", category: ::CloudWaba::Models::Enums::Templates::Category::Utility, language: "en", components: [::CloudWaba::Models::Templates::BodyComponent.new(text: "Welcome to our store!, how can we help?")])
 ```
+
+### Creating a template with header, body and footer components with variables
+```ruby
+require "cloud_waba/client"
+
+client = CloudWaba::Client.new
+category = ::CloudWaba::Models::Enums::Templates::Category::Marketing
+language = "en"
+
+header_text = "Hi {{1}}!"
+header_example = ::CloudWaba::Models::Templates::Example.new(values: ["ahmed"])
+header_component = ::CloudWaba::Models::Templates::HeaderTextComponent.new(text: header_text, example: header_example)
+
+body_text = "We offer {{1}} discount!"
+body_example = ::CloudWaba::Models::Templates::Example.new(values: ["20%"])
+body_component = ::CloudWaba::Models::Templates::BodyComponent.new(text: body_text, example: body_example)
+
+footer_text = "Petitux Team"
+footer_component = ::CloudWaba::Models::Templates::FooterComponent.new(text: footer_text)
+
+client.templates.create(name: "discount", category: category, language: language, components: [header_component, body_component, footer_component])
+```
+
+<!-- ### Creating a template with header, body, footer and buttons
+
+### Listing templates
+
+### Update Template
+
+### Delete Template
+
+### Sending template with header, body, footer and buttons
+
+### Sending template with header, body, footer and buttons (variables) -->

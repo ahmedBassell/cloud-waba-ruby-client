@@ -6,10 +6,12 @@ module CloudWaba
       module Templates
         class ComponentType < T::Enum
           enums do
-            Headers = new("headers")
-            Body = new("body")
-            Footer = new("footer")
-            Buttons = new("buttons")
+            Header = new("HEADER")
+            Body = new("BODY")
+            Footer = new("FOOTER")
+            Buttons = new("BUTTONS")
+            Carousel = new("CAROUSEL")
+            LimitedTimeOffer = new("LIMITED_TIME_OFFER")
           end
         end
       end

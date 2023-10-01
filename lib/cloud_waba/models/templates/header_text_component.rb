@@ -4,16 +4,17 @@
 module CloudWaba
   module Models
     module Templates
-      class BodyComponent < T::Struct
-        prop :type, ::CloudWaba::Models::Enums::Templates::ComponentType, default: ::CloudWaba::Models::Enums::Templates::ComponentType::Body
+      class HeaderTextComponent < T::Struct
+        prop :type, ::CloudWaba::Models::Enums::Templates::ComponentType, default: ::CloudWaba::Models::Enums::Templates::ComponentType::Header
         prop :text, ::String
         prop :example, ::T.nilable(::CloudWaba::Models::Templates::Example)
 
         def serialize
           {
             type: type.serialize,
+            format: "TEXT",
             text: text,
-            example: { body_text: [ example.values ] }
+            example: { header_text: example.values }
           }
         end
       end
