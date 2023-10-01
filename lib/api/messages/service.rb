@@ -1,6 +1,8 @@
 # typed: true
 # frozen_string_literal: true
 
+require 'pry'
+
 module API
   module Messages
     class Service
@@ -16,7 +18,7 @@ module API
 
 
       sig do
-        params(recipient: ::String, body: ::String, reply_message_id: ::T.nilable(::String)).returns(::Models::Messages::Response)
+        params(recipient: ::String, body: ::String, reply_message_id: ::T.nilable(::String)).returns(::CloudWaba::Models::Messages::Response)
       end
       def send_text(recipient:, body:, reply_message_id: nil)
         text_type = "text"
@@ -36,7 +38,7 @@ module API
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
         response = http_client.post(body: payload, headers: {})
-        ::Models::Messages::Response.parse(response: response)
+        ::CloudWaba::Models::Messages::Response.parse(response: response)
       end
 
       sig do
@@ -44,8 +46,8 @@ module API
           recipient: ::String,
           template_name: ::String,
           template_lang: ::String,
-          components: ::T::Array[::Models::Templates::Component]
-        ).returns(::Models::Messages::Response)
+          components: ::T::Array[::CloudWaba::Models::Templates::Component]
+        ).returns(::CloudWaba::Models::Messages::Response)
       end
       def send_template(recipient:, template_name:, template_lang:, components:)
         template_type = "template"
@@ -65,17 +67,17 @@ module API
         }
 
         response = http_client.post(body: payload, headers: {})
-        ::Models::Messages::Response.parse(response: response)
+        ::CloudWaba::Models::Messages::Response.parse(response: response)
       end
 
       private
 
       def http_client
-        ::HttpClient.new(base_url: messages_endpoint, auth_token: @config.access_token)
+        ::CloudWaba::HttpClient.new(base_url: messages_endpoint, auth_token: @config.access_token)
       end
 
       def messages_endpoint
-        "#{@config.base_url}/#{@config.phone_number_id}/messages"
+        "#{@config.base_url}/#{@config.api_version}/#{@config.phone_number_id}/messages"
       end
     end
   end
