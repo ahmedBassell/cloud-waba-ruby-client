@@ -36,7 +36,6 @@ module API
         }
 
         response = http_client.post(body: payload)
-        binding.pry
         ::CloudWaba::Models::Templates::Response.parse(response: response)
       end
 
