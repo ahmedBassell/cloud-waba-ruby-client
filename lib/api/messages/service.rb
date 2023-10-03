@@ -106,6 +106,27 @@ module API
       end
 
       sig do
+        params(recipient: ::String, caption: ::T.nilable(::String), link: ::String, reply_message_id: ::T.nilable(::String)).returns(::CloudWaba::Models::Messages::Response)
+      end
+      def send_document(recipient:, caption:, link:, reply_message_id: nil)
+        document_type = "document"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": document_type,
+        }
+
+        payload["document"] = { link: link, caption: caption }
+        payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
+
+        response = http_client.post(body: payload, headers: {})
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
+      end
+
+      sig do
         params(
           recipient: ::String,
           template_name: ::String,
