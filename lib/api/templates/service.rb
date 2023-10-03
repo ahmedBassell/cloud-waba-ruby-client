@@ -17,6 +17,18 @@ module API
 
 
       sig do
+        params(limit: T.nilable(::Integer)).returns(::CloudWaba::Models::Templates::List)
+      end
+      def list(limit: 20)
+        fields = "id,name,category,language,status"
+        response = templates_client.get(params: { fields: fields, limit: limit })
+
+        parsed_response = JSON.parse(response.body.to_s)
+        templates = parsed_response["data"].map{|hash| ::CloudWaba::Models::Templates::Response.parse(template_hash: hash)}
+        ::CloudWaba::Models::Templates::List.new(templates: templates, paging: parsed_response["paging"])
+      end
+
+      sig do
         params(
           name: ::String,
           category: ::CloudWaba::Models::Enums::Templates::Category,
@@ -35,7 +47,7 @@ module API
           "components": components.map(&:serialize)
         }
 
-        response = http_client.post(body: payload)
+        response = templates_client.post(body: payload)
         ::CloudWaba::Models::Templates::Response.parse(response: response)
       end
 
@@ -47,7 +59,7 @@ module API
         ).returns(::T::Boolean)
       end
       def update(template_id:, category:, components:)
-        client = ::CloudWaba::HttpClient.new(base_url: template_endpoint(template_id: template_id), auth_token: @config.access_token)
+        template_client = template_endpoint(template_id: template_id)
         payload = {
           "category": category.serialize,
           "components": components.map(&:serialize)
@@ -68,7 +80,7 @@ module API
         params = { name: name }
         params[:hsm_id] = template_id unless template_id.nil?
 
-        response = http_client.delete(params: params)
+        response = templates_client.delete(params: params)
         parsed_response = JSON.parse(response.body.to_s)
         
         parsed_response["success"] || false
@@ -76,8 +88,12 @@ module API
 
       private
 
-      def http_client
+      def templates_client
         ::CloudWaba::HttpClient.new(base_url: templates_endpoint, auth_token: @config.access_token)
+      end
+
+      def template_endpoint(template_id:)
+        ::CloudWaba::HttpClient.new(base_url: template_endpoint(template_id: template_id), auth_token: @config.access_token)
       end
 
       def templates_endpoint

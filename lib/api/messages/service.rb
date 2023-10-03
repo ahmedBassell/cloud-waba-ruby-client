@@ -38,7 +38,8 @@ module API
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
         response = http_client.post(body: payload, headers: {})
-        ::CloudWaba::Models::Messages::Response.parse(response: response)
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(template_hash: parsed_response)
       end
 
       sig do
@@ -67,7 +68,8 @@ module API
         }
 
         response = http_client.post(body: payload, headers: {})
-        ::CloudWaba::Models::Messages::Response.parse(response: response)
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(template_hash: parsed_response)
       end
 
       private

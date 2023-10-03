@@ -57,7 +57,12 @@ client.messages.send_text(body: "Hello World!", recipient: "+201XXXXXXXXX")
 
 
 ## Templates
-
+### Listing templates
+```ruby
+require "cloud_waba/client"
+client = CloudWaba::Client.new
+client.templates.list(limit: 5)
+```
 ### Creating a template
 ```ruby
 require "cloud_waba/client"
@@ -107,8 +112,6 @@ client.templates.delete(name: "discount")
 ```
 
 <!-- ### Creating a template with header, body, footer and buttons
-
-### Listing templates
 
 ### Sending template with header, body, footer and buttons
 

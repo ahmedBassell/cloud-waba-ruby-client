@@ -30,6 +30,7 @@ require_relative "models/templates/buttons/url"
 require_relative "models/templates/buttons_component"
 require_relative "models/templates/message_template"
 require_relative "models/templates/response"
+require_relative "models/templates/list"
 # Helpers
 require_relative "utils"
 require_relative "http_client"

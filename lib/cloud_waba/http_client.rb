@@ -13,10 +13,10 @@ module CloudWaba
       @auth_token = auth_token
     end
 
-    def get(headers:)
+    def get(headers: {}, params: {})
       client = http_client.headers(headers)
       client = client.auth("Bearer #{@auth_token}") unless @auth_token.nil?
-      response = client.get(@base_url, ssl_context: ssl_ctx)
+      response = client.get(@base_url, ssl_context: ssl_ctx, params: params)
     end
 
     def post(headers: {}, body:)
@@ -25,7 +25,7 @@ module CloudWaba
       response = client.post(@base_url, ssl_context: ssl_ctx, json: body)
     end
 
-    def put(headers:, body:)
+    def put(headers: {}, body:)
       client = http_client.headers(headers)
       client = client.auth("Bearer #{@auth_token}") unless @auth_token.nil?
       response = client.put(@base_url, ssl_context: ssl_ctx, json: body.to_json)
