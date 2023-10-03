@@ -2,13 +2,26 @@
 
 Ruby wrapper for [Cloud WhatsApp Business API](https://developers.facebook.com/docs/whatsapp/cloud-api).
 
-<!-- ## Installation
+## Installation
 
 Add following line to your Gemfile:
 
 ```ruby
-gem 'cloud-waba-ruby-client', '~> 1.0'
-``` -->
+gem 'cloud-waba-ruby-client', '~> 0.0.0'
+```
+
+then run
+
+```shell
+bundle
+```
+
+or install it yourself as:
+
+```shell
+gem install cloud-waba-ruby-client
+```
+
 ## Setup
 1. Make sure you have
   - Meta business app
