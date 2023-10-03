@@ -153,6 +153,27 @@ module API
       end
 
       sig do
+        params(recipient: ::String, contacts: ::T::Array[::CloudWaba::Models::Messages::Contact], reply_message_id: ::T.nilable(::String)).returns(::CloudWaba::Models::Messages::Response)
+      end
+      def send_contact(recipient:, contacts:, reply_message_id: nil)
+        contacts_type = "contacts"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": contacts_type,
+        }
+
+        payload["contacts"] = contacts.map(&:serialize)
+        payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
+
+        response = http_client.post(body: payload, headers: {})
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
+      end
+
+      sig do
         params(
           recipient: ::String,
           template_name: ::String,

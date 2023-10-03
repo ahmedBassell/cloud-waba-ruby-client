@@ -76,24 +76,32 @@ client = CloudWaba::Client.new
 client.messages.send_document(caption: "Nice caption for doc!", link: "https://download.samplelib.com/xls/sample-empty.xls",recipient: "+201XXXXXXXXX")
 ```
 
-### Sending location
+### Sending location message
 ```ruby
 require "cloud_waba/client"
 
 client = CloudWaba::Client.new
 client.messages.send_location(longitude: 30.0849643, latitude: 31.2913638, name: "Cairo University", address: "1 شارع الجامعة, Giza Governorate 12613", recipient: "+201XXXXXXXXX")
 ```
+
+### Sending contact message
+```ruby
+require "cloud_waba/client"
+
+client = CloudWaba::Client.new
+name = ::CloudWaba::Models::Messages::ContactName.new(formatted_name: "Ahmed Ali", first_name: "Ashley")
+phone_1 = ::CloudWaba::Models::Messages::ContactPhone.new(type: ::CloudWaba::Models::Enums::ContactPhoneType::Cell, phone: "+201XXXXXXXXX")
+contacts = [::CloudWaba::Models::Messages::Contact.new(name: name, phones: [phone_1])]
+client.messages.send_contact(contacts: contacts,recipient: "+201XXXXXXXXX")
+```
 <!-- ### Sending template with header, body, footer and buttons
 
 ### Sending template with header, body, footer and buttons (variables)
-
-
-### Sending contact -->
+ -->
 
 
 
 
-## Templates
 ### Listing templates
 ```ruby
 require "cloud_waba/client"
