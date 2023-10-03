@@ -31,10 +31,10 @@ module CloudWaba
       response = client.put(@base_url, ssl_context: ssl_ctx, json: body.to_json)
     end
 
-    def delete(headers:)
+    def delete(headers:{}, params:{})
       client = http_client.headers(headers)
       client = client.auth("Bearer #{@auth_token}") unless @auth_token.nil?
-      response = client.delete(@base_url, ssl_context: ssl_ctx)
+      response = client.delete(@base_url, ssl_context: ssl_ctx, params: params)
     end
 
     private

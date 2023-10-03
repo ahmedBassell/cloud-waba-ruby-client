@@ -39,6 +39,41 @@ module API
         ::CloudWaba::Models::Templates::Response.parse(response: response)
       end
 
+      sig do
+        params(
+          template_id: ::String,
+          category: ::CloudWaba::Models::Enums::Templates::Category,
+          components: ::T::Array[::CloudWaba::Models::Templates::Component]
+        ).returns(::T::Boolean)
+      end
+      def update(template_id:, category:, components:)
+        client = ::CloudWaba::HttpClient.new(base_url: template_endpoint(template_id: template_id), auth_token: @config.access_token)
+        payload = {
+          "category": category.serialize,
+          "components": components.map(&:serialize)
+        }
+        response = client.post(body: payload)
+        parsed_response = JSON.parse(response.body.to_s)
+        
+        parsed_response["success"] || false
+      end
+
+      sig do
+        params(
+          name: ::String,
+          template_id: ::T.nilable(::String)
+        ).returns(::T::Boolean)
+      end
+      def delete(name:, template_id: nil)
+        params = { name: name }
+        params[:hsm_id] = template_id unless template_id.nil?
+
+        response = http_client.delete(params: params)
+        parsed_response = JSON.parse(response.body.to_s)
+        
+        parsed_response["success"] || false
+      end
+
       private
 
       def http_client
@@ -47,6 +82,10 @@ module API
 
       def templates_endpoint
         "#{@config.base_url}/#{@config.api_version}/#{@config.business_account_id}/#{MESSAGE_TEMPLATES_PATH}"
+      end
+
+      def template_endpoint(template_id:)
+        "#{@config.base_url}/#{@config.api_version}/#{template_id}"
       end
     end
   end

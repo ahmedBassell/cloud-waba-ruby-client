@@ -88,13 +88,17 @@ footer_component = ::CloudWaba::Models::Templates::FooterComponent.new(text: foo
 client.templates.create(name: "discount", category: category, language: language, components: [header_component, body_component, footer_component])
 ```
 
+### Delete Template
+```ruby
+client = CloudWaba::Client.new
+client.templates.delete(name: "discount")
+```
+
 <!-- ### Creating a template with header, body, footer and buttons
 
 ### Listing templates
 
 ### Update Template
-
-### Delete Template
 
 ### Sending template with header, body, footer and buttons
 
