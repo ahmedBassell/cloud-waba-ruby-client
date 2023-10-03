@@ -54,7 +54,7 @@ module API
         }
         response = client.post(body: payload)
         parsed_response = JSON.parse(response.body.to_s)
-        
+
         parsed_response["success"] || false
       end
 

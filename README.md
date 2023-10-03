@@ -88,6 +88,18 @@ footer_component = ::CloudWaba::Models::Templates::FooterComponent.new(text: foo
 client.templates.create(name: "discount", category: category, language: language, components: [header_component, body_component, footer_component])
 ```
 
+### Update Template
+```ruby
+client = CloudWaba::Client.new
+
+category = ::CloudWaba::Models::Enums::Templates::Category::Utility
+body_text = "Your order no. {{1}} has been placed!"
+body_example = ::CloudWaba::Models::Templates::Example.new(values: ["500"])
+body_component = ::CloudWaba::Models::Templates::BodyComponent.new(text: body_text, example: body_example)
+
+client.templates.update(template_id: "1027873614915405", category: category, components: [body_component])
+```
+
 ### Delete Template
 ```ruby
 client = CloudWaba::Client.new
@@ -97,8 +109,6 @@ client.templates.delete(name: "discount")
 <!-- ### Creating a template with header, body, footer and buttons
 
 ### Listing templates
-
-### Update Template
 
 ### Sending template with header, body, footer and buttons
 
