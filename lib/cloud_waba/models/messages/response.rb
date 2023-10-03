@@ -23,12 +23,12 @@ module CloudWaba
         prop :contacts, ::T::Array[::CloudWaba::Models::Contact]
         prop :message_id, ::String
 
-        sig { params(response: ::HTTP::Response).returns(::CloudWaba::Models::Messages::Response) }
-        def self.parse(response:)
-          parsed_response = JSON.parse(response.body.to_s)
+        sig { params(hash: ::T::Hash[::T.untyped, ::T.untyped]).returns(::CloudWaba::Models::Messages::Response) }
+        def self.parse(hash:)
+          # parsed_response = JSON.parse(response.body.to_s)
 
-          contact_wa_id = parsed_response["contacts"][0]["wa_id"]
-          message_id = parsed_response["messages"][0]["id"]
+          contact_wa_id = hash["contacts"][0]["wa_id"]
+          message_id = hash["messages"][0]["id"]
 
           self.new(
             messaging_product: ::CloudWaba::Models::Enums::MessagingProduct::WhatsApp,

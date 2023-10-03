@@ -39,7 +39,28 @@ module API
 
         response = http_client.post(body: payload, headers: {})
         parsed_response = JSON.parse(response.body.to_s)
-        ::CloudWaba::Models::Messages::Response.parse(template_hash: parsed_response)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
+      end
+
+      sig do
+        params(recipient: ::String, caption: ::T.nilable(::String), link: ::String, reply_message_id: ::T.nilable(::String)).returns(::CloudWaba::Models::Messages::Response)
+      end
+      def send_image(recipient:, caption:, link:, reply_message_id: nil)
+        image_type = "image"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": image_type,
+        }
+
+        payload["image"] = { link: link, caption: caption }
+        payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
+
+        response = http_client.post(body: payload, headers: {})
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
 
       sig do
@@ -69,7 +90,7 @@ module API
 
         response = http_client.post(body: payload, headers: {})
         parsed_response = JSON.parse(response.body.to_s)
-        ::CloudWaba::Models::Messages::Response.parse(template_hash: parsed_response)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
 
       private
