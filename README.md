@@ -75,12 +75,19 @@ require "cloud_waba/client"
 client = CloudWaba::Client.new
 client.messages.send_document(caption: "Nice caption for doc!", link: "https://download.samplelib.com/xls/sample-empty.xls",recipient: "+201XXXXXXXXX")
 ```
+
+### Sending location
+```ruby
+require "cloud_waba/client"
+
+client = CloudWaba::Client.new
+client.messages.send_location(longitude: 30.0849643, latitude: 31.2913638, name: "Cairo University", address: "1 شارع الجامعة, Giza Governorate 12613", recipient: "+201XXXXXXXXX")
+```
 <!-- ### Sending template with header, body, footer and buttons
 
 ### Sending template with header, body, footer and buttons (variables)
 
-### Sending audio
-### Sending location
+
 ### Sending contact -->
 
 

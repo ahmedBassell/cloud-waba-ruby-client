@@ -127,6 +127,32 @@ module API
       end
 
       sig do
+        params(recipient: ::String, longitude: ::Float, latitude: ::Float, name: ::String, address: ::String, reply_message_id: ::T.nilable(::String)).returns(::CloudWaba::Models::Messages::Response)
+      end
+      def send_location(recipient:, longitude:, latitude:, name:, address:, reply_message_id: nil)
+        location_type = "location"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": location_type,
+        }
+
+        payload["location"] = {
+          "longitude": longitude,
+          "latitude": latitude,
+          "name": name,
+          "address": address
+        }
+        payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
+
+        response = http_client.post(body: payload, headers: {})
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
+      end
+
+      sig do
         params(
           recipient: ::String,
           template_name: ::String,
