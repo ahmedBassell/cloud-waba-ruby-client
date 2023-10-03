@@ -59,12 +59,19 @@ require "cloud_waba/client"
 client = CloudWaba::Client.new
 client.messages.send_audio(link: "https://samplelib.com/lib/preview/mp3/sample-3s.mp3",recipient: "+201XXXXXXXXX")
 ```
+
+### Sending video message
+```ruby
+require "cloud_waba/client"
+
+client = CloudWaba::Client.new
+client.messages.send_video(caption: "Nice caption for video!", link: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",recipient: "+201XXXXXXXXX")
+```
 <!-- ### Sending template with header, body, footer and buttons
 
 ### Sending template with header, body, footer and buttons (variables)
 
 ### Sending audio
-### Sending video
 ### Sending location
 ### Sending contact -->
 
