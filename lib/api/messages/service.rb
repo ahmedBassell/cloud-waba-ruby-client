@@ -64,6 +64,27 @@ module API
       end
 
       sig do
+        params(recipient: ::String, link: ::String, reply_message_id: ::T.nilable(::String)).returns(::CloudWaba::Models::Messages::Response)
+      end
+      def send_audio(recipient:, link:, reply_message_id: nil)
+        audio_type = "audio"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": audio_type,
+        }
+
+        payload["audio"] = { link: link }
+        payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
+
+        response = http_client.post(body: payload, headers: {})
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
+      end
+
+      sig do
         params(
           recipient: ::String,
           template_name: ::String,

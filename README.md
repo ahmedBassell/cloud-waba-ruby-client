@@ -44,12 +44,20 @@ client = CloudWaba::Client.new
 client.messages.send_text(body: "Hello World!", recipient: "+201XXXXXXXXX")
 ```
 
-### Sending image
+### Sending image message
 ```ruby
 require "cloud_waba/client"
 
 client = CloudWaba::Client.new
-client.messages.send_image(caption: "Nice caption!", link: "https://picsum.photos/200/300",recipient: "+201XXXXXXXXX")
+client.messages.send_image(caption: "Nice caption for image!", link: "https://picsum.photos/200/300",recipient: "+201XXXXXXXXX")
+```
+
+### Sending audio message
+```ruby
+require "cloud_waba/client"
+
+client = CloudWaba::Client.new
+client.messages.send_audio(link: "https://samplelib.com/lib/preview/mp3/sample-3s.mp3",recipient: "+201XXXXXXXXX")
 ```
 <!-- ### Sending template with header, body, footer and buttons
 

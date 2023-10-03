@@ -26,7 +26,7 @@ module CloudWaba
         sig { params(hash: ::T::Hash[::T.untyped, ::T.untyped]).returns(::CloudWaba::Models::Messages::Response) }
         def self.parse(hash:)
           # parsed_response = JSON.parse(response.body.to_s)
-
+          # binding.pry
           contact_wa_id = hash["contacts"][0]["wa_id"]
           message_id = hash["messages"][0]["id"]
 
