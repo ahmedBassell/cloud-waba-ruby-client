@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-require 'pry'
+# require 'pry'
 
 module API
   module Messages
