@@ -23,12 +23,36 @@ gem install cloud-waba-ruby-client
 ```
 
 ## Setup
-1. Make sure you have
+1. Make sure you have:
   - Meta business app
   - WhatsApp Business account
   - A phone number added to your WhatsApp business account
   - Meta developer app
-2. Add following environment variables to your `.env` file:
+### Initiating clients using parameters
+```ruby
+require "cloud_waba/client"
+client_1 = CloudWaba::Client.new(
+  app_id: param_app_id_1,
+  app_secret: param_app_secret_1,
+  phone_number_id: param_phone_number_id_1,
+  business_account_id: param_business_account_id_1,
+  access_token: param_access_token_1,
+  api_version: param_api_version_1
+)
+
+client_2 = CloudWaba::Client.new(
+  app_id: param_app_id_2,
+  app_secret: param_app_secret_2,
+  phone_number_id: param_phone_number_id_2,
+  business_account_id: param_business_account_id_2,
+  access_token: param_access_token_2,
+  api_version: param_api_version_2
+)
+
+# Do somethingn with the clients
+```
+### Initiating client using Env variables
+Add following environment variables to your `.env` file:
   ```shell
   WA_BASE_URL=https://graph.facebook.com
   CLOUD_API_VERSION=v16.0
@@ -39,7 +63,10 @@ gem install cloud-waba-ruby-client
   CLOUD_API_ACCESS_TOKEN=
   ```
 Fill credentials for your meta developer app, business account and phone number ids.
-
+```ruby
+require "cloud_waba/client"
+client = CloudWaba::Client.new # If no params provided, configuration will fallback to env variables
+```
 ## Usage
 ### Sending template message
 ```ruby
