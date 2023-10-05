@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "cloud-waba-ruby-client"
-  s.version     = "0.0.2"
+  s.version     = "0.0.3"
   s.summary     = "Cloud Waba Client for Ruby."
   s.description = "A simple API wrapper for Cloud Whatsapp Business API"
   s.authors     = ["Ahmed Bassell"]
@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    =
     "https://rubygems.org/gems/cloud_waba"
   s.license       = "MIT"
+  s.required_ruby_version = '>= 2.5.3'
   
   # Runtime dependencies
   s.add_dependency 'dotenv', '~>2.8.0' # env variable
