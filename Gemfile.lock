@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    cloud-waba-ruby-client (0.0.0)
+    cloud-waba-ruby-client (0.0.2)
       dotenv (~> 2.8.0)
-      http (~> 4.0.0)
+      http (~> 4.4.1)
       sorbet-runtime (~> 0.5.1)
 
 GEM
@@ -18,17 +18,23 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.8.1)
+    ffi (1.15.5)
+    ffi-compiler (1.0.1)
+      ffi (>= 1.0.0)
+      rake
     hashdiff (1.0.1)
-    http (4.0.5)
+    http (4.4.1)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
-      http-form_data (~> 2.0)
-      http_parser.rb (~> 0.6.0)
+      http-form_data (~> 2.2)
+      http-parser (~> 1.2.0)
     http-cookie (1.0.5)
       domain_name (~> 0.5)
     http-form_data (2.3.0)
-    http_parser.rb (0.6.0)
+    http-parser (1.2.3)
+      ffi-compiler (>= 1.0, < 2.0)
     public_suffix (4.0.7)
+    rake (13.0.6)
     rexml (3.2.6)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -62,8 +68,7 @@ DEPENDENCIES
   byebug (~> 9.0, >= 9.0.5)
   cloud-waba-ruby-client!
   rspec (~> 3.4.0)
-  sorbet
-  sorbet-runtime
+  sorbet (~> 0.5.1)
   webmock (~> 3.17.0)
 
 BUNDLED WITH

@@ -47,8 +47,34 @@ module CloudWaba
     extend ::T::Sig
     extend ::T::Helpers
 
-    def initialize
-      @config = ::CloudWaba::Utils.import_config
+    attr_reader :config
+
+    sig do
+      params(
+        app_id: ::T.nilable(::String),
+        app_secret: ::T.nilable(::String),
+        phone_number_id: ::T.nilable(::String),
+        business_account_id: ::T.nilable(::String),
+        access_token: ::T.nilable(::String),
+        api_version: ::T.nilable(::String)
+      ).void
+    end
+    def initialize(
+      app_id: nil,
+      app_secret: nil,
+      phone_number_id: nil,
+      business_account_id: nil,
+      access_token: nil,
+      api_version: nil
+    )
+      @config = ::CloudWaba::Utils.import_config(
+        app_id: app_id,
+        app_secret: app_secret,
+        phone_number_id: phone_number_id,
+        business_account_id: business_account_id,
+        access_token: access_token,
+        api_version: api_version
+      )
     end
 
     def messages
