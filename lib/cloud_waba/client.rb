@@ -10,6 +10,7 @@ require_relative "models/enums/templates/component_type"
 require_relative "models/enums/templates/button_type"
 require_relative "models/enums/templates/format"
 require_relative "models/enums/contact_phone_type"
+
 # Models
 require_relative "models/config"
 require_relative "models/contact"
@@ -35,6 +36,11 @@ require_relative "models/templates/buttons_component"
 require_relative "models/templates/message_template"
 require_relative "models/templates/response"
 require_relative "models/templates/list"
+
+# Errors
+require_relative "errors/unauthorized"
+require_relative "errors/bad_request"
+
 # Helpers
 require_relative "utils"
 require_relative "http_client"

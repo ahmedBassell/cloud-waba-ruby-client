@@ -1,7 +1,7 @@
 # typed: true
 # frozen_string_literal: true
 
-# require 'pry'
+require 'pry'
 
 module API
   module Messages
@@ -37,7 +37,8 @@ module API
 
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
+
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -58,7 +59,7 @@ module API
         payload["image"] = { link: link, caption: caption }
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -79,7 +80,7 @@ module API
         payload["audio"] = { link: link }
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -100,7 +101,7 @@ module API
         payload["video"] = { link: link, caption: caption }
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -121,7 +122,7 @@ module API
         payload["document"] = { link: link, caption: caption }
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -147,7 +148,7 @@ module API
         }
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -168,7 +169,7 @@ module API
         payload["contacts"] = contacts.map(&:serialize)
         payload["context"] = { "message_id": reply_message_id } unless reply_message_id.nil?
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -198,7 +199,7 @@ module API
           }
         }
 
-        response = http_client.post(body: payload, headers: {})
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
@@ -211,6 +212,25 @@ module API
 
       def messages_endpoint
         "#{@config.base_url}/#{@config.api_version}/#{@config.phone_number_id}/messages"
+      end
+
+      def with_error_handling
+        return unless block_given?
+
+        response = yield
+        parsed_response = JSON.parse(response.body.to_s)
+        error_message = parsed_response.dig("error", "message")
+
+        case response.code
+        when 400
+          raise ::CloudWaba::Errors::BadRequest, error_message
+        when 401
+          raise ::CloudWaba::Errors::Unauthorized, error_message
+        else
+          # Success
+        end
+
+        response
       end
     end
   end
