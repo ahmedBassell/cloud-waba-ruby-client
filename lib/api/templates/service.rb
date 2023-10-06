@@ -21,7 +21,7 @@ module API
       end
       def list(limit: 20)
         fields = "id,name,category,language,status"
-        response = templates_client.get(params: { fields: fields, limit: limit })
+        response = with_error_handling { templates_client.get(params: { fields: fields, limit: limit }) }
 
         parsed_response = JSON.parse(response.body.to_s)
         templates = parsed_response["data"].map{|hash| ::CloudWaba::Models::Templates::Response.parse(template_hash: hash)}
@@ -47,7 +47,7 @@ module API
           "components": components.map(&:serialize)
         }
 
-        response = templates_client.post(body: payload)
+        response = with_error_handling { templates_client.post(body: payload) }
         ::CloudWaba::Models::Templates::Response.parse(response: response)
       end
 
@@ -64,7 +64,7 @@ module API
           "category": category.serialize,
           "components": components.map(&:serialize)
         }
-        response = client.post(body: payload)
+        response = with_error_handling { client.post(body: payload) }
         parsed_response = JSON.parse(response.body.to_s)
 
         parsed_response["success"] || false
@@ -80,7 +80,7 @@ module API
         params = { name: name }
         params[:hsm_id] = template_id unless template_id.nil?
 
-        response = templates_client.delete(params: params)
+        response = with_error_handling { templates_client.delete(params: params) }
         parsed_response = JSON.parse(response.body.to_s)
         
         parsed_response["success"] || false
@@ -102,6 +102,25 @@ module API
 
       def template_endpoint(template_id:)
         "#{@config.base_url}/#{@config.api_version}/#{template_id}"
+      end
+
+      def with_error_handling
+        return unless block_given?
+
+        response = yield
+        parsed_response = JSON.parse(response.body.to_s)
+        error_message = parsed_response.dig("error", "message")
+
+        case response.code
+        when 400
+          raise ::CloudWaba::Errors::BadRequest, error_message
+        when 401
+          raise ::CloudWaba::Errors::Unauthorized, error_message
+        else
+          # Success
+        end
+
+        response
       end
     end
   end
