@@ -40,6 +40,7 @@ require_relative "models/templates/list"
 # Errors
 require_relative "errors/unauthorized"
 require_relative "errors/bad_request"
+require_relative "errors/missing_parameter"
 
 # Helpers
 require_relative "utils"
