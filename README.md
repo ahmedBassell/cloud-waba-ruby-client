@@ -134,6 +134,14 @@ phone_1 = ::CloudWaba::Models::Messages::ContactPhone.new(type: ::CloudWaba::Mod
 contacts = [::CloudWaba::Models::Messages::Contact.new(name: name, phones: [phone_1])]
 client.messages.send_contact(contacts: contacts,recipient: "+201XXXXXXXXX")
 ```
+
+### Sending reaction on a message
+```ruby
+require "cloud_waba/client"
+
+client = CloudWaba::Client.new
+ client.messages.send_reaction(recipient: "+201XXXXXXXXX", emoji: "💙", reply_message_id: "wamid.HBgMMjAxMjAxMzIyMzMxFQIAEZgSQTU5QkExMUUyQlRCNTU1NTVEAA==")
+```
 <!-- ### Sending template with header, body, footer and buttons
 
 ### Sending template with header, body, footer and buttons (variables)
