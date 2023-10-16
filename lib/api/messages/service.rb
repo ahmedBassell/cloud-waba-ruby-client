@@ -174,6 +174,44 @@ module API
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
 
+      # curl -X  POST \
+      #   'https://graph.facebook.com/v18.0/FROM_PHONE_NUMBER_ID/messages' \
+      #   -H 'Authorization: Bearer ACCESS_TOKEN' \
+      #   -H 'Content-Type: application/json' \
+      #   -d '{
+      #     "messaging_product": "whatsapp",
+      #     "recipient_type": "individual",
+      #     "to": "PHONE_NUMBER",
+      #     "type": "reaction",
+      #     "reaction": {
+      #       "message_id": "wamid.HBgLM...",
+      #       "emoji": "\uD83D\uDE00"
+      #     }
+      #   }'
+      sig do
+        params(recipient: ::String, emoji: ::String, reply_message_id: ::String).returns(::CloudWaba::Models::Messages::Response)
+      end
+      def send_reaction(recipient:, emoji:, reply_message_id: nil)
+        reaction_type = "reaction"
+
+        payload = {
+          "messaging_product": MESSAGING_PRODUCT,
+          "recipient_type": RECIPIENT_TYPE,
+          "to": recipient,
+          "type": reaction_type,
+        }
+
+        payload["reaction"] = {
+          "message_id": reply_message_id,
+          "emoji": emoji
+        }
+
+        response = with_error_handling { http_client.post(body: payload, headers: {}) }
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
+      end
+
+
       sig do
         params(
           recipient: ::String,
