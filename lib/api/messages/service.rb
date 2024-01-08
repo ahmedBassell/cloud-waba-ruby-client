@@ -247,9 +247,19 @@ module API
       end
       def fetch_media_url(media_id:)
         url = "#{@config.base_url}/#{@config.api_version}/#{media_id}"
-        response = with_error_handling { http_client.get(url) }
+        client = ::CloudWaba::HttpClient.new(base_url: url, auth_token: @config.access_token)
+        response = with_error_handling { client.get }
         parsed_response = JSON.parse(response.body.to_s)
         ::CloudWaba::Models::Media::Response.parse(hash: parsed_response)
+      end
+
+      sig do
+        params(media_url: ::String).returns(::StringIO)
+      end
+      def download_media(media_url:)
+        client = ::CloudWaba::HttpClient.new(base_url: media_url, auth_token: @config.access_token)
+        response = client.get
+        StringIO.new(response.body)
       end
 
       private

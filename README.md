@@ -7,7 +7,7 @@ Ruby wrapper for [Cloud WhatsApp Business API](https://developers.facebook.com/d
 Add following line to your Gemfile:
 
 ```ruby
-gem 'cloud-waba-ruby-client', '~> 0.0.5'
+gem 'cloud-waba-ruby-client', '~> 0.0.8'
 ```
 
 then run

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "cloud-waba-ruby-client"
-  s.version     = "0.0.5"
+  s.version     = "0.0.8"
   s.summary     = "Cloud Waba Client for Ruby."
   s.description = "A simple API wrapper for Cloud Whatsapp Business API"
   s.authors     = ["Ahmed Bassell"]
