@@ -254,12 +254,12 @@ module API
       end
 
       sig do
-        params(media_url: ::String).returns(::StringIO)
+        params(media_url: ::String).returns(::File)
       end
       def download_media(media_url:)
         client = ::CloudWaba::HttpClient.new(base_url: media_url, auth_token: @config.access_token)
         response = client.get
-        StringIO.new(response.body)
+        build_file(response: response)
       end
 
       private
@@ -289,6 +289,53 @@ module API
         end
 
         response
+      end
+
+      sig { params(response: ::HTTP::Response).returns(::File) }
+      def build_file(response:)
+        file_content = response.body
+        content_disposition = response['Content-Disposition']
+
+        if content_disposition && content_disposition =~ /filename=(["'])?([^'"\s]+)/
+          filename = $2
+        else
+          # If Content-Disposition is not present or doesn't contain filename information,
+          # infer the extension from Content-Type
+          content_type = response['Content-Type']
+          filename += case content_type
+                      when 'text/plain'
+                        'txt'
+                      when 'application/pdf'
+                        'pdf'
+                      when 'image/jpeg'
+                        'jpg'
+                      when 'image/png'
+                        'png'
+                      when 'image/webp'
+                        'webp'
+                      when 'audio/aac'
+                        'aac'
+                      when 'audio/mp4'
+                        'mp4'
+                      when 'audio/mpeg'
+                        'mp3'
+                      when 'audio/amr'
+                        'amr'
+                      when 'audio/ogg'
+                        'ogg'
+                      when 'video/mp4'
+                        'mp4'
+                      when 'video/3gp'
+                        '3pg'
+                      end
+        end
+
+        file_path = "/tmp/#{filename || 'file.' + file_extension}"
+        File.open(file_path, 'wb') do |f|
+          f.write(file_content.to_s)
+        end
+
+        File.new(file_path)
       end
     end
   end
