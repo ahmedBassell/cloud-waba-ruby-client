@@ -18,6 +18,7 @@ require_relative "models/messages/response"
 require_relative "models/messages/contact_name"
 require_relative "models/messages/contact_phone"
 require_relative "models/messages/contact"
+require_relative "models/media/response"
 
 require_relative "models/templates/example"
 require_relative "models/templates/component"
