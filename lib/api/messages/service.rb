@@ -242,6 +242,16 @@ module API
         ::CloudWaba::Models::Messages::Response.parse(hash: parsed_response)
       end
 
+      sig do
+        params(media_id: ::String).returns(::CloudWaba::Models::Media::Response)
+      end
+      def fetch_media_url(media_id:)
+        url = "#{@config.base_url}/#{@config.api_version}/#{media_id}"
+        response = with_error_handling { http_client.get(url) }
+        parsed_response = JSON.parse(response.body.to_s)
+        ::CloudWaba::Models::Media::Response.parse(hash: parsed_response)
+      end
+
       private
 
       def http_client
