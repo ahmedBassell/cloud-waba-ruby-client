@@ -1,8 +1,6 @@
 # typed: true
 # frozen_string_literal: true
 
-# require 'pry'
-
 module CloudWaba
   module Models
     module Templates
